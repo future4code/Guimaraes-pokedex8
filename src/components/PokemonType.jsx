@@ -6,7 +6,10 @@ const Container = styled.div`
     text-align: center;
     border-radius: 20px;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    padding: 5px;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     span {
         font-size: 14px;
