@@ -1,17 +1,23 @@
 import styled from 'styled-components'
 import GlobalStyle from './globalStyles'
-import PokemonCard from './components/PokemonCard'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import Pokedex from './pages/Pokedex'
+import PokemonPage from './pages/PokemonPage'
 
 const App = () => {
   return (
     <>
     <GlobalStyle />
 
-    <Container>
-      <PokemonCard />
-      <PokemonCard />
-      <PokemonCard />
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path='/pokedex' element={<Pokedex />} />
+        <Route path='/pokemon/:id' element={<PokemonPage />} />
+      </Routes>
+    </BrowserRouter>
+
     </>
   ) 
 }
