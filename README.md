@@ -1,9 +1,9 @@
 # POKEDEX
 
 Nome dos integrantes: 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
+- Alain Christian Barroso
+- Levi Shiniti Nakayama
+- Lucas Henrique Cardoso
 
 Link do Surge: www.link.com.br
 
