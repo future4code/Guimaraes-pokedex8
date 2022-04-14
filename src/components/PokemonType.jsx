@@ -12,8 +12,8 @@ const Container = styled.div`
     align-items: center;
 
     span {
-        font-size: 14px;
-        color: white;
+        font-size: 13px;
+        color: lightgray;
         text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     }
 `
@@ -23,58 +23,58 @@ const PokemonType = (props) => {
     
     switch (props.types) {
         case 'bug':
-            color = '#9ACD32'
+            color = '#99cd32a4'
             break
         case 'dragon':
-            color = '#9370DB'
+            color = '#9470dbb0'
             break
         case 'fairy':
-            color = '#DDA0DD'
+            color = '#dda0ddb2'
             break
         case 'fire':
-            color = '#FFA500'
+            color = '#ffa600b7'
             break
         case 'ghost':
-            color = '#5c1191'
+            color = '#5c1191b9'
             break
         case 'ground':
-            color = '#BDB76B'
+            color = '#bdb76bb7'
             break
         case 'normal':
-            color = '#DCDCDC'
+            color = '#dcdcdcae'
             break
         case 'psychic':
-            color = '#ff49ff'
+            color = '#ff49ffb0'
             break
         case 'steel':
-            color = '#C0C0C0'
+            color = '#c0c0c0ae'
             break
         case 'dark':
-            color = '#402512'
+            color = '#402512b1'
             break
         case 'electric':
-            color = '#ffe23c'
+            color = '#ffe23cae'
             break
         case 'fighting':
-            color = '#FF4500'
+            color = '#ff4400b3'
             break
         case 'flying':
-            color = '#9585f1'
+            color = '#9585f1a5'
             break
         case 'grass':
-            color = '#58d258'
+            color = '#58d258ad'
             break
         case 'ice':
-            color = '#ADD8E6'
+            color = '#add8e6b6'
             break
         case 'poison':
-            color = '#9841c3'
+            color = '#9841c3b7'
             break
         case 'rock':
-            color = '#b9976c'
+            color = '#b9986cbb'
             break
         case 'water':
-            color = '#1E90FF'
+            color = '#1e8fffb2'
             break
     }
 

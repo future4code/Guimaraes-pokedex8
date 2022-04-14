@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PokemonType from './PokemonType'
 
@@ -51,7 +52,7 @@ const PokeInfo = styled.div`
     cursor: pointer;
 
     img {
-        background-color: #e8e8e821;
+        background-color: #16171b6b;
         width: 200px;
         height: 200px;
         border-radius: 5px;
@@ -78,6 +79,8 @@ const TypeContainer = styled.div`
 `
 
 const PokemonCard = () => {
+    const navigate = useNavigate()
+
     const pokemonType = [
         {name: 'water'},
         {name: 'flying'},
@@ -86,7 +89,7 @@ const PokemonCard = () => {
     return (
         <Container>
             <AddButton onClick={() => console.log('button')}>Adicionar</AddButton>
-            <PokeInfo id='infoContainer' onClick={() => console.log('container')}>
+            <PokeInfo id='infoContainer' onClick={() => navigate('/pokemon/130')}>
                 <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png' alt='Gyarados' />
                 <span className='number'>Nº 130</span>
                 <h3>Gyarados</h3>

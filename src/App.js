@@ -24,7 +24,7 @@ const App = () => {
       <Routes>
         <Route index element={<Home setCurrentPage={setCurrentPage} />} />
         <Route path='/pokedex' element={<Pokedex setCurrentPage={setCurrentPage} />} />
-        <Route path='/pokemon/:id' element={<PokemonPage />} />
+        <Route path='/pokemon/:id' element={<PokemonPage setCurrentPage={setCurrentPage} />} />
       </Routes>
     </BrowserRouter>
 
