@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -31,19 +33,82 @@ const BarContainer = styled.div`
 `
 
 const Bar = styled.div`
-    background-color: green;
+    background-color: ${props => props.color};
     height: 20px;
-    width: 25%;
+    width: ${props => `${props.percent}%`};
 `
 
 const Stat = (props) => {
+    const [styles, setStyles] = useState({})
+
+    const statConvert = {
+        hp: 1.6,
+        attack: 1.34,
+        defense: 1.8,
+        speed: 1.4,
+        special: 1.54,
+    }
+
+    const convert = (value, statConvert) => {
+        const percent = value / statConvert
+        const color = colorConvert(percent)
+        setStyles({
+            percent: percent,
+            color: color
+        })
+    }
+
+    const colorConvert = (percent) => {
+        if (percent > 85) {
+            return '#00bfff'
+        } else if (percent > 75) {
+            return '#00ff37' 
+        } else if (percent > 55) {
+            return '#b3ff00'
+        } else if (percent > 40) {
+            return '#eeff00'
+        } else if (percent > 30) {
+            return '#ffb300'
+        } else if (percent > 15) {
+            return '#ff6200'
+        } else {
+            return '#ff0000'
+        }
+    }
+
+    const onMount = () => {
+        switch (props.nameValue) {
+            case 'hp':
+                convert(props.value, statConvert.hp)
+                break
+            case 'attack':
+                convert(props.value, statConvert.attack)
+                break
+            case 'defense':
+                convert(props.value, statConvert.defense)
+                break
+            case 'speed':
+                convert(props.value, statConvert.speed)
+                break
+            case 'special':
+                convert(props.value, statConvert.special)
+                break
+        }
+    }
+
+    useEffect(() => {
+        onMount()
+    }, [])
+
+    console.log(styles)
+
     return (
         <Container>
             <p>{props.name}:</p>
             <BarContainer>
                 <span>Mín</span>
                 <div id='barContainer'>
-                    <Bar />
+                    <Bar percent={styles.percent} color={styles.color} />
                 </div>
                 <span>Max</span>
             </BarContainer>

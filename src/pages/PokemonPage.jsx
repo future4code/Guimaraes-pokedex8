@@ -162,12 +162,12 @@ const PokemonPage = (props) => {
                     <BaseStats>
                         <h3>Base Stats</h3>
                         <div>
-                            <Stat name='HP' />
-                            <Stat name='Attack' />
-                            <Stat name='Defense' />
-                            <Stat name='S. Attack' />
-                            <Stat name='S. Deffense' />
-                            <Stat name='Speed' />
+                            <Stat name='HP' nameValue='hp' value={95} />
+                            <Stat name='Attack' nameValue='attack' value={125} />
+                            <Stat name='Defense' nameValue='defense' value={79} />
+                            <Stat name='S. Attack' nameValue='special' value={60} />
+                            <Stat name='S. Deffense' nameValue='special' value={100} />
+                            <Stat name='Speed' nameValue='speed' value={81} />
                         </div>
                     </BaseStats>
                     <BaseStats style={{marginTop: '50px'}}>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.header`
     background-color: #16171b;
-    color: lightgray;
+    color: var(--white);
     height: 80px;
     display: flex;
     justify-content: space-between;

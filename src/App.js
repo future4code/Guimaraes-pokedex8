@@ -18,9 +18,7 @@ const App = () => {
     <GlobalStyle />
 
     <BrowserRouter>
-
       <Header currentPage={currentPage} />
-
       <Routes>
         <Route index element={<Home setCurrentPage={setCurrentPage} />} />
         <Route path='/pokedex' element={<Pokedex setCurrentPage={setCurrentPage} />} />
