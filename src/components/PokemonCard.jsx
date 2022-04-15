@@ -1,8 +1,6 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PokemonType from './PokemonType'
-import useCapitalLetter from '../hooks/useCapitalLetter'
 
 const Container = styled.div`
     width: 200px;
@@ -92,7 +90,7 @@ const PokemonCard = (props) => {
                 
                 <img src={props.image} alt={props.name} />
                 <span className='number'>Nº {props.id}</span>
-                <h3>{useCapitalLetter(props.name)}</h3>
+                <h3>{props.name.replace(/\b(\w)/g, s => s.toUpperCase())}</h3>
 
                 <TypeContainer>
                     {pokemonTypes.map((type, id) => (

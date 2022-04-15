@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import useCapitalLetter from '../hooks/useCapitalLetter'
 
 const Container = styled.div`
     background-color: ${props => props.color};
@@ -81,7 +80,7 @@ const PokemonType = (props) => {
 
     return (
         <Container color={color}>
-            <span>{useCapitalLetter(props.types)}</span>
+            <span>{props.types.replace(/\b(\w)/g, s => s.toUpperCase())}</span>
         </Container>
     )
 }
