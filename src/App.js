@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Pokedex from './pages/Pokedex'
 import PokemonPage from './pages/PokemonPage'
 import { useState } from 'react'
+import Footer from './components/Footer'
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState({
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/pokedex' element={<Pokedex setCurrentPage={setCurrentPage} />} />
         <Route path='/pokemon/:id' element={<PokemonPage setCurrentPage={setCurrentPage} />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
 
     </>

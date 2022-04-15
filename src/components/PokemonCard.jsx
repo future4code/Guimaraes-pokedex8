@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PokemonType from './PokemonType'
+import useCapitalLetter from '../hooks/useCapitalLetter'
 
 const Container = styled.div`
     width: 200px;
@@ -78,26 +80,26 @@ const TypeContainer = styled.div`
     justify-content: space-around;
 `
 
-const PokemonCard = () => {
+const PokemonCard = (props) => {
     const navigate = useNavigate()
 
-    const pokemonType = [
-        {name: 'water'},
-        {name: 'flying'},
-    ]
+    const pokemonTypes = props.types.map(item => item.type.name)
 
     return (
         <Container>
             <AddButton onClick={() => console.log('button')}>Adicionar</AddButton>
-            <PokeInfo id='infoContainer' onClick={() => navigate('/pokemon/130')}>
-                <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png' alt='Gyarados' />
-                <span className='number'>Nº 130</span>
-                <h3>Gyarados</h3>
+            <PokeInfo id='infoContainer' onClick={() => navigate(`/pokemon/${props.id}`)}>
+                
+                <img src={props.image} alt={props.name} />
+                <span className='number'>Nº {props.id}</span>
+                <h3>{useCapitalLetter(props.name)}</h3>
+
                 <TypeContainer>
-                    {pokemonType.map((type, id) => (
-                        <PokemonType key={id} types={type.name} />
+                    {pokemonTypes.map((type, id) => (
+                        <PokemonType key={id} types={type} />
                     ))}
                 </TypeContainer>
+
             </PokeInfo>
         </Container>
     )

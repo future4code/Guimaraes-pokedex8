@@ -42,7 +42,7 @@ const Stat = (props) => {
     const [styles, setStyles] = useState({})
 
     const statConvert = {
-        hp: 1.6,
+        hp: 1.75,
         attack: 1.34,
         defense: 1.8,
         speed: 1.4,
@@ -99,8 +99,6 @@ const Stat = (props) => {
     useEffect(() => {
         onMount()
     }, [])
-
-    console.log(styles)
 
     return (
         <Container>

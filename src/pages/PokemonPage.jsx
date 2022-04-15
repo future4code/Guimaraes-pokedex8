@@ -1,7 +1,10 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import PokemonType from '../components/PokemonType'
 import Stat from '../components/Stat'
+import { RiArrowGoBackFill } from 'react-icons/ri'
 
 const Container = styled.div`
     max-width: 1200px;
@@ -29,6 +32,15 @@ const PokemonContainer = styled.div`
         padding: 0px 50px;
     }
 
+    picture {
+        svg {
+            position: absolute;
+            margin: 20px;
+            font-size: 35px;
+            cursor: pointer;
+        }
+    }
+
     img {
         width: 350px;
         background-color: var(--background);
@@ -47,7 +59,7 @@ const PokemonInfo = styled.div`
         align-items: center;
         justify-content: space-between;
 
-        p {
+        p, li {
             font-size: 22px;
             color: var(--white);
         }
@@ -113,47 +125,70 @@ const BaseStats = styled.div`
 `
 
 const PokemonPage = (props) => {
-    const [imageSide, setImageSide] = useState('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png')
-    const pokemonType = [
-        {name: 'water'},
-        {name: 'flying'},
-    ]
+    const params = useParams()
+    const [pokemon, setPokemon] = useState({})
+    const [loading, setLoading] = useState(true)
+    const [isFront, setIsFront] = useState(true)
+
+    const fetch = async () => {
+        setLoading(true)
+        try {
+            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${params.id}`)
+            setPokemon(data)
+            setLoading(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
+        fetch()
         props.setCurrentPage({
             text: 'Voltar',
             path: '/',
         })
     }, [])
 
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
     return (
         <Container>
             <div className='title'>
-                <h1>Gyarados</h1>
-                <span>Nº130</span>
+                <h1>{pokemon.name.replace(/\b(\w)/g, s => s.toUpperCase())}</h1>
+                <span>Nº{pokemon.id}</span>
             </div>
             <PokemonContainer>
                 <div className='left'>
-                    <img src={imageSide} alt='Gyarados' />
+                    <picture>
+                        <RiArrowGoBackFill onClick={() => setIsFront(!isFront)} />
+                        <img src={isFront ? pokemon.sprites.front_default : pokemon.sprites.back_default} alt={pokemon.name} />
+                    </picture>
                     <PokemonInfo>
                         <div className='basicInfo'>
                             <p>Height:</p>
-                            <p>7.3 m</p>
+                            <p>{pokemon.height} m</p>
                         </div>
                         <div className='basicInfo'>
                             <p>Weight:</p>
-                            <p>235.0 kg</p>
+                            <p>{pokemon.weight} kg</p>
                         </div>
-                        <div className='basicInfo'>
-                            <p>Abilities:</p>
-                            <p>Intimidate</p>
-                        </div>
+                        {pokemon.abilities.map((item, index) => (
+                            <div className='basicInfo' key={index}>
+                                <p>Abillity {index + 1}:</p>
+                                <li>{item.ability.name || 'none'}</li>
+                            </div>
+                        ))}
+                        
                     </PokemonInfo>
                     <PokemonInfo>
                         <h4>Types:</h4>
                         <div className='pokemonType'>
-                            {pokemonType.map((type, id) => (
-                                <PokemonType key={id} types={type.name} />
+                            {pokemon.types.map(item => item.type.name).map((item, id) => (
+                                <PokemonType key={id} types={item} />
                             ))}
                         </div>
                     </PokemonInfo>
@@ -162,31 +197,31 @@ const PokemonPage = (props) => {
                     <BaseStats>
                         <h3>Base Stats</h3>
                         <div>
-                            <Stat name='HP' nameValue='hp' value={95} />
-                            <Stat name='Attack' nameValue='attack' value={125} />
-                            <Stat name='Defense' nameValue='defense' value={79} />
-                            <Stat name='S. Attack' nameValue='special' value={60} />
-                            <Stat name='S. Deffense' nameValue='special' value={100} />
-                            <Stat name='Speed' nameValue='speed' value={81} />
+                            <Stat name='HP' nameValue='hp' value={pokemon.stats[0].base_stat} />
+                            <Stat name='Attack' nameValue='attack' value={pokemon.stats[1].base_stat} />
+                            <Stat name='Defense' nameValue='defense' value={pokemon.stats[2].base_stat} />
+                            <Stat name='S. Attack' nameValue='special' value={pokemon.stats[3].base_stat} />
+                            <Stat name='S. Deffense' nameValue='special' value={pokemon.stats[4].base_stat} />
+                            <Stat name='Speed' nameValue='speed' value={pokemon.stats[5].base_stat} />
                         </div>
                     </BaseStats>
                     <BaseStats style={{marginTop: '50px'}}>
                         <h3>Main Moves</h3>
                         <div className='moveListContainer'>
                             <ul className='moveList'>
-                                <li>Headbutt</li>
-                                <li>Tackle</li>
-                                <li>Body-slam</li>
+                                <li>{pokemon.moves[0].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[1].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[2].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
                             </ul>
                             <ul className='moveList'>
-                                <li>Headbutt</li>
-                                <li>Tackle</li>
-                                <li>Body-slam</li>
+                                <li>{pokemon.moves[3].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[4].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[5].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
                             </ul>
                             <ul className='moveList'>
-                                <li>Headbutt</li>
-                                <li>Tackle</li>
-                                <li>Body-slam</li>
+                                <li>{pokemon.moves[6].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[7].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
+                                <li>{pokemon.moves[8].move.name.replace(/\b(\w)/g, s => s.toUpperCase())}</li>
                             </ul>
                         </div>
                     </BaseStats>

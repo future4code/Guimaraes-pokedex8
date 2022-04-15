@@ -1,6 +1,9 @@
+import axios from 'axios'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import Loading from '../components/Loading'
 import PokemonCard from '../components/PokemonCard'
 
 const Container = styled.div`
@@ -34,18 +37,57 @@ const PokemonDisplay = styled.div`
     grid-template-columns: repeat(auto-fill,minmax(230px, 1fr));
 `
 
+const LoadingContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0px;
+`
+
 const Home = (props) => {
+    const [pokemonList, setPokemonList] = useState([])
+    const [limit, setLimit] = useState(20)
+
+    const fetch = async () => {
+        try {
+            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
+            const newArrayPokemon = []
+
+            for (let pokemon of data.results) {
+                const { data } = await axios.get(pokemon.url)
+                newArrayPokemon.push(data)
+            }
+
+            setPokemonList(newArrayPokemon)
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const reachedBottom = () => {
+        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+            let newLimit = limit + 20
+            if (newLimit > 151) {
+                newLimit = 151
+            }
+            setLimit(newLimit)
+        }
+    }
+
     useEffect(() => {
+        window.addEventListener('scroll', reachedBottom)
+        fetch()
         props.setCurrentPage({
             text: 'Ir para minha pokédex',
             path: '/pokedex',
         })
-    }, [])
+    }, [limit])
 
     return (
         <Container>
             <Title>
-                <h1>Pokémons</h1>
+                <h1>Pokémon</h1>
                 <select>
                     <option>Número crescente</option>
                     <option>Número decrescente</option>
@@ -53,19 +95,21 @@ const Home = (props) => {
                 </select>
             </Title>
             <PokemonDisplay>
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
-                <PokemonCard />
+                {pokemonList.map((pokemon, index) => (
+                    <PokemonCard
+                        key={index}
+                        id={pokemon.id}
+                        name={pokemon.name}
+                        types={pokemon.types}
+                        image={pokemon.sprites.front_default}
+                    />
+                ))}
             </PokemonDisplay>
+            {limit < 151 ? (
+                <LoadingContainer>
+                    <Loading />
+                </LoadingContainer>
+            ) : null}
         </Container>
     )
 }

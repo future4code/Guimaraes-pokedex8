@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import useCapitalLetter from '../hooks/useCapitalLetter'
 
 const Container = styled.div`
     background-color: ${props => props.color};
@@ -78,13 +79,9 @@ const PokemonType = (props) => {
             break
     }
 
-    const firstLetterUpper = (string) => {
-        return string[0].toUpperCase() + string.slice(1)
-    }
-
     return (
         <Container color={color}>
-            <span>{firstLetterUpper(props.types)}</span>
+            <span>{useCapitalLetter(props.types)}</span>
         </Container>
     )
 }
