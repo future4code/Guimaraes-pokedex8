@@ -1,17 +1,18 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Loading from '../components/Loading'
 import PokemonCard from '../components/PokemonCard'
+import { usePokemonList } from '../providers/index'
 
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     font-size: calc(10px + 2vmin);
     color: white;
+    margin-bottom: 50px;
 `
 
 const Title = styled.div`
@@ -19,6 +20,10 @@ const Title = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 30px 20px;
+
+    h1 {
+        font-weight: 500;
+    }
 
     select {
         height: 50px;
@@ -45,7 +50,7 @@ const LoadingContainer = styled.div`
 `
 
 const Home = (props) => {
-    const [pokemonList, setPokemonList] = useState([])
+    const { pokemonList, setPokemonList, pokedexList } = usePokemonList()
     const [limit, setLimit] = useState(20)
 
     const fetch = async () => {
@@ -73,6 +78,16 @@ const Home = (props) => {
             }
             setLimit(newLimit)
         }
+    }
+    
+    const checkIfInPokedex = (order) => {
+        let pokedexOrder = []
+        for (let pokemon of pokedexList) {
+            pokedexOrder.push(pokemon.order)
+        }
+
+        if (pokedexOrder.includes(order)) return true
+        if (!pokedexOrder.includes(order)) return false
     }
 
     useEffect(() => {
@@ -102,6 +117,8 @@ const Home = (props) => {
                         name={pokemon.name}
                         types={pokemon.types}
                         image={pokemon.sprites.front_default}
+                        pokemon={pokemon}
+                        remove={checkIfInPokedex(pokemon.order)}
                     />
                 ))}
             </PokemonDisplay>

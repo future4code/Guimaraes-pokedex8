@@ -5,13 +5,15 @@ import styled from 'styled-components'
 import PokemonType from '../components/PokemonType'
 import Stat from '../components/Stat'
 import { RiArrowGoBackFill } from 'react-icons/ri'
+import Loading from '../components/Loading'
 
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     font-size: calc(10px + 2vmin);
     color: var(--white);
+    margin-bottom: 50px;
     
     .title {
         text-align: center;
@@ -144,14 +146,16 @@ const PokemonPage = (props) => {
     useEffect(() => {
         fetch()
         props.setCurrentPage({
-            text: 'Voltar',
+            text: 'Voltar para Home',
             path: '/',
         })
     }, [])
 
     if (loading) {
         return (
-            <div>Loading...</div>
+            <Container style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Loading />
+            </Container>
         )
     }
 

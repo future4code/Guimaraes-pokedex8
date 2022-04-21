@@ -46,7 +46,7 @@ const Header = (props) => {
     return (
         <Container>
             <Button onClick={() => navigate(props.currentPage.path)}>{props.currentPage.text}</Button>
-            <h2>Lista de Pokémons</h2>
+            <h2>Pokémon List</h2>
             <div />
         </Container>
     )
