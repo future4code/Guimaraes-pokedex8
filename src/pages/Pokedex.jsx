@@ -37,7 +37,7 @@ const NoneDisplay = styled.div`
     align-items: center;
     
     h2 {
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 400;
     }
 
