@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PokemonType from './PokemonType'
+import { usePokemonList } from '../providers/index'
 
 const Container = styled.div`
     width: 200px;
@@ -80,12 +81,22 @@ const TypeContainer = styled.div`
 
 const PokemonCard = (props) => {
     const navigate = useNavigate()
-
     const pokemonTypes = props.types.map(item => item.type.name)
+    
+    const { pokedexList, setPokedexList, removeFromPokedex } = usePokemonList()
+
+    const handleClick = (pokemon) => {
+        setPokedexList([...pokedexList, pokemon])
+    }
 
     return (
         <Container>
-            <AddButton onClick={() => console.log('button')}>Adicionar</AddButton>
+            {!props.remove ? (
+                <AddButton onClick={() => handleClick(props.pokemon)}>Adicionar</AddButton>
+            ) : (
+                <AddButton style={{backgroundColor: 'red'}} onClick={() => removeFromPokedex(props.pokemon)}>Remover</AddButton>
+            )}
+            
             <PokeInfo id='infoContainer' onClick={() => navigate(`/pokemon/${props.id}`)}>
                 
                 <img src={props.image} alt={props.name} />
